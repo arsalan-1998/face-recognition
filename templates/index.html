@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sweetalert2.css">
+    <link rel="stylesheet" href="/static/css/sweetalert2.min.css">
+    <script src="/static/js/sweetalert2.js"></script>
+    <script src="/static/js/sweetalert2.min.js"></script>
+    <script src="/static/js/materialize.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/materialize.js"></script>
+    <style>
+        .clearfix {
+            margin-top: 3%;
+            margin-bottom: 3%;
+        }
+    </style>
+    <title>Home | Welcome</title>
+</head>
+<body>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper black">
+                <a style="text-transform: uppercase;letter-spacing: 5.6px;" href="#face_form" class="brand-logo center">Attendance Management</a>
+            </div>
+        </nav>
+    </div>
+    <div class="carousel carousel-slider center">
+        <div class="carousel-fixed-item center">
+            <a class="btn waves-effect white grey-text darken-text-2">get Started</a>
+        </div>
+        <div style="background-image: url('/static/images/ml.jpg'); background-repeat: no-repeat;background-size: cover;" class="carousel-item red white-text" href="#one!">
+            <h2>Machine Learning</h2>
+            <p class="white-text">A model is designed to detect the faces</p>
+        </div>
+        <div style="background-image: url('/static/images/ml-1.png'); background-repeat: no-repeat;background-size: cover;" class="carousel-item amber white-text" href="#two!">
+            <h2>Open CV</h2>
+            <p class="white-text">It is a Machine Learning Library</p>
+        </div>
+        <div style="background-image: url('/static/images/ml-2.jpg'); background-repeat: no-repeat;background-size: cover;" class="carousel-item green white-text" href="#three!">
+            <h2>Haar Cascade Model</h2>
+            <p class="white-text">The Algorithm upon which the model is built</p>
+        </div>
+        <div style="background-image: url('/static/images/ml-3.jpg'); background-repeat: no-repeat;background-size: cover;" class="carousel-item blue white-text" href="#four!">
+            <h2>Result</h2>
+            <p class="white-text">Attendance is marked upon detecting the face</p>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col s2"></div>
+        <div class="col s6 m8">
+            <div class="row">
+                <form method="post" action="/take-picture" class="col s12" id="face_form">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="Enter your Roll No" id="usn" name="roll_no" type="number" class="validate">
+                            <label for="roll_no">Roll No</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="name" name="name" type="text" class="validate">
+                            <label for="name">Name</label>
+                        </div>
+                    </div>
+                    <button id="take_picture" class="btn waves-effect white grey-text darken-text-2" type="submit">Submit
+                        <i class="material-icons right">send</i>
+                      </button>
+                </form>
+                {%- with msg = get_flashed_messages(with_categories=True) %} 
+                    {% if msg %} <!-- if msg exist or is there any content hm!-->
+                        {% for category, message in msg %}
+                        <script>
+                            var message = {{ data1|tojson }} 
+                            Swal.fire(
+                            ''+message, 
+                            '{{ message }}', 
+                            '{{ category }}'
+                            ).then(function() {
+                                console.log('done'); 
+                            });
+                        </script>
+                        {% endfor %} 
+                    {% endif %}
+                {% endwith %}
+                <div id="form-response"></div>
+            </div>
+        </div>
+        <div class="col s3">
+        </div>
+    </div>
+    {% if data %}
+        <div class="row">
+            <div class="col s2"></div>
+            <div class="col s6 m8">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="/static/images/ml-3.jpg">
+                        <span class="card-title">Take Picture</span>
+                        <button id="picture" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">camera</i></button>
+                    </div>
+                    <div class="card-content">
+                        <p>Take a picture to train your model.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s2"></div>
+        </div>
+    {% endif %}
+    <script src="/static/js/fullwidth-carousel.js"></script>
+    <script src="/static/js/ajax-picture.js"></script>
+</body>
+</html>
